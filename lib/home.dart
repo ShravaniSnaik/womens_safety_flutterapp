@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/widgets/CustomCarouel.dart';
 import 'package:flutter_demo/widgets/custom_appBar.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,6 +36,7 @@ void getRandomQuote(){
            getRandomQuote,
           qIndex
           ),
+          CustomCarousel(), 
         ],
       ),
       ),
