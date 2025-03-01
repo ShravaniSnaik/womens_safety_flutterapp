@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/utils/quotes.dart';
 
-import '../utils/quotes.dart';
+
+
 
 class CustomAppbar extends StatelessWidget {
   //const CustomAppbar({super.key});

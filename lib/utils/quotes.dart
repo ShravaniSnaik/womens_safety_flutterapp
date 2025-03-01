@@ -18,9 +18,14 @@ List<String> articleTitle =[
   "Be a change",
   "You are strong"
 ];
+// List<String> imageSliders = [
+//   "assets/images/image-1.jpg","assets/images/image-2.jpg","assets/images/image-3.jpg","assets/images/image-4.jpg"
+// ];
+
 List<String> imageSliders = [
-  "https://vecteezy.sa7eer.com/r/d/vecteezy?id1=search-top-pricing_page_2025-ignore&id2=98df7e54-6839-41df-9e88-8514c528b4eb&id3=2b575b11-08b9-4def-b2bd-885224de20ef&u=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F20153282-international-women-s-day-group-of-happy-smiling-women-of-different-ethnicity-and-multinational-diversity-vector-illustration-in-flat-style",
-  "https://vecteezy.sa7eer.com/r/d/vecteezy?id1=search-top-pricing_page_2025-ignore&id2=98df7e54-6839-41df-9e88-8514c528b4eb&id3=2b575b11-08b9-4def-b2bd-885224de20ef&u=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F8209519-unity-of-women-seamless-pattern",
-  "https://vecteezy.sa7eer.com/r/d/vecteezy?id1=search-top-pricing_page_2025-ignore&id2=98df7e54-6839-41df-9e88-8514c528b4eb&id3=2b575b11-08b9-4def-b2bd-885224de20ef&u=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F21736914-set-of-feminist-movement-card-international-day-of-feminism-womens-of-different-nationalities-together-women-empowerment-diversity-gender-equality-concept-vector-illustration-for-women-s-day",
-  "https://vecteezy.sa7eer.com/r/d/vecteezy?id1=search-top-pricing_page_2025-ignore&id2=98df7e54-6839-41df-9e88-8514c528b4eb&id3=2b575b11-08b9-4def-b2bd-885224de20ef&u=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F7320136-female-profile-silhouette-made-of-many-multicultural-women-and-girls-allyship-lettering-for-community-in-social-network-pattern-forming-a-woman-head-flat-hand-drawn-vector-illustration"
+   "https://media.istockphoto.com/photos/silhouette-of-super-strong-successful-businesswoman-picture-id1249879109?k=20&m=1249879109&s=612x612&w=0&h=I-joEMjqkq1wCJZJeLWUCd1d2HcB5WxBShdkA9YM0cg=",
+  "https://media.istockphoto.com/vectors/young-woman-looks-at-the-mirror-and-sees-her-happy-reflection-vector-id1278815846?k=20&m=1278815846&s=612x612&w=0&h=JUTmV9Of-_ILOfXBfV9Cmp_41yuTliSdFIcZy5LKuss=",
+  "https://media.istockphoto.com/vectors/mental-health-or-psychology-concept-with-flowering-human-head-vector-id1268669581?k=20&m=1268669581&s=612x612&w=0&h=YVLTKCZXKugEn40aqOkir4vcoFeTUAQToa1i3AFYRNU=",
+  "https://media.istockphoto.com/photos/confidence-and-strength-concept-picture-id1086700012?k=20&m=1086700012&s=612x612&w=0&h=1wWVN3AB7BH7o3y2A2b-NG3HB9H6Dwkc9OLz2lxgwAY=",
+
 ];
