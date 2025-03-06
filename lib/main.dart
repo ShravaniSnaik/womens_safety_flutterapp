@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'child/child_login_screen.dart'; //
 
 void main() {
   runApp(const MyApp());
@@ -12,13 +11,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-     debugShowCheckedModeBanner: false,
-     theme: ThemeData(fontFamily: 'Poppins',primarySwatch: Colors.blue),
-      home: HomePage(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Poppins', primarySwatch: Colors.blue),
+      home: LoginScreen(),
     );
   }
 }
-
-
- 
