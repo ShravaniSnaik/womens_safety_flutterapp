@@ -1,0 +1,25 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "women-safety-app-680e9",
+                    "appId": "1:1062374052181:android:b49c96b9370ddce38c1fdc",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "women-safety-app-680e9",
+                    "configurations": {
+                        "android": "1:1062374052181:android:b49c96b9370ddce38c1fdc",
+                        "ios": "1:1062374052181:ios:763bf8378e89271a8c1fdc",
+                        "macos": "1:1062374052181:ios:763bf8378e89271a8c1fdc",
+                        "web": "1:1062374052181:web:7cc7bc99ad5b6eec8c1fdc",
+                        "windows": "1:1062374052181:web:e21beca5f58be6298c1fdc"
+                    }
+                }
+            }
+        }
+    }
+}

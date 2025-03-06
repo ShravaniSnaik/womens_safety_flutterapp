@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/home_widgets/CustomCarouel.dart';
 import 'package:flutter_demo/widgets/home_widgets/custom_appBar.dart';
 import 'package:flutter_demo/widgets/home_widgets/emergency.dart';
+import 'package:flutter_demo/widgets/home_widgets/livesafe.dart';
+import 'package:flutter_demo/widgets/home_widgets/safehome/SafeHome.dart';
 
 
 
@@ -55,6 +57,22 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Emergency(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Explore LiveSafe",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    LiveSafe(),
+                    Padding(
+                padding: const EdgeInsets.all(8.0),
+                
+              ),
+                    SafeHome(),
                   ],
                 ),
               ),
