@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/child/child_login_screen.dart';
+import 'package:flutter_demo/model/user_model.dart';
 import '../../utils/constants.dart';
 import '../components/SecondaryButton.dart';
 import '../components/PrimaryButton.dart';
@@ -12,21 +15,84 @@ class RegisterParentScreen extends StatefulWidget {
 
 class _RegisterParentScreenState extends State<RegisterParentScreen> {
   bool isPasswordShown = true;
+  bool isRetypePasswordShown = true; 
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-  _onSubmit() {
+ bool isLoading= false;
+  _onSubmit() async{
     _formKey.currentState!.save();
+    if(_formData['password']!=_formData['rpassword']){
+      dialogueBox(context, 'password and retype password should be equal');
+    }
+    else {
+      progressIndicator(context);
+      try {
+        setState(() {
+        isLoading =true;
+      });
+  UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+     email:_formData['gemail'].toString(),
+         password: _formData['password'].toString()
+  );
+  if(userCredential.user!=null)
+  {
+    setState(() {
+        isLoading =true;
+      });
+    final v=userCredential.user!.uid;
+    DocumentReference<Map<String,dynamic>> db=
+            FirebaseFirestore.instance.collection('users').doc(v);
+            final user=UserModel(
+              name:_formData['name'].toString(),
+              phone:_formData['phone'].toString(),
+              childEmail: _formData['cemail'].toString(),
+              guardianEmail: _formData['gemail'].toString(),
+              id:v,
+              type:'parent',
+            );
+            final jsonData=user.toJson();
+            await db.set(jsonData).whenComplete((){
+              goTo(context, LoginScreen());
+              setState(() {
+        isLoading =false;
+      });
+            });
+            
+  }
+} on FirebaseAuthException catch (e) {
+  setState(() {
+        isLoading =false;
+      });
+  if (e.code == 'weak-password') {
+    print('The password provided is too weak.');
+    dialogueBox(context, 'The password provided is too weak.');
+  } else if (e.code == 'email-already-in-use') {
+    print('The account already exists for that email.');
+    dialogueBox(context, 'The account already exists for that email.');
+  }
+} catch (e) {
+  setState(() {
+        isLoading =false;
+      });
+  print(e);
+  dialogueBox(context, e.toString());
+}
+    }
     print(_formData['email']);
     print(_formData['password']);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SingleChildScrollView(
+          child: Stack(
+          children:[
+             isLoading
+                ? progressIndicator(context)
+             :
+            SingleChildScrollView(
             child: Column(
               children: [
                 Container(
@@ -93,7 +159,7 @@ class _RegisterParentScreenState extends State<RegisterParentScreen> {
                           keyboardtype: TextInputType.emailAddress,
                           prefix: const Icon(Icons.person),
                           onsave: (email) {
-                            _formData['email'] = email ?? "";
+                            _formData['gemail'] = email ?? "";
                           },
                           validate: (email) {
                             if (email!.isEmpty ||
@@ -149,10 +215,10 @@ class _RegisterParentScreenState extends State<RegisterParentScreen> {
 
                         CustomTextField(
                           hintText: ' retype password',
-                          isPassword: isPasswordShown,
+                          isPassword: isRetypePasswordShown,
                           prefix: Icon(Icons.vpn_key_rounded),
                           onsave: (password) {
-                            _formData['password'] = password ?? "";
+                            _formData['rpassword'] = password ?? "";
                           },
                           validate: (password) {
                             if (password!.isEmpty || password.length < 7) {
@@ -163,11 +229,11 @@ class _RegisterParentScreenState extends State<RegisterParentScreen> {
                           suffix: IconButton(
                             onPressed: () {
                               setState(() {
-                                isPasswordShown = !isPasswordShown;
+                                isRetypePasswordShown = !isRetypePasswordShown;
                               });
                             },
                             icon:
-                                isPasswordShown
+                                isRetypePasswordShown
                                     ? Icon(Icons.visibility_off)
                                     : Icon(Icons.visibility),
                           ),
@@ -194,6 +260,8 @@ class _RegisterParentScreenState extends State<RegisterParentScreen> {
                 ),
               ],
             ),
+          ),
+          ]
           ),
         ),
       ),

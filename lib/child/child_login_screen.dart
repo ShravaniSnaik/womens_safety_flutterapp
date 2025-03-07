@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/child/register_child.dart';
+import 'package:flutter_demo/db/sp.dart';
+import 'package:flutter_demo/child/bottom_screens/home.dart';
+import 'package:flutter_demo/parent/parent_home_screen.dart';
 import '../components/custom_textfield.dart'; // Replace with the correct path
 import '../components/PrimaryButton.dart';
 import '../../utils/constants.dart';
@@ -15,8 +20,65 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordShown = true;
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
-  _onSubmit() {
+  bool isLoading=false;
+
+  _onSubmit() async{
     _formKey.currentState!.save();
+    try {
+      setState(() {
+        isLoading =true;
+      });
+  UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: _formData['cemail'].toString(),
+    password: _formData['password'].toString(),
+  );
+  if (userCredential.user!=null){
+    // setState(() {
+    //     isLoading =true;
+    //   });
+      FirebaseFirestore.instance
+      .collection('users')
+      .doc(userCredential.user!.uid)
+      .get()
+      .then((value) {
+
+         if (!value.exists) {
+          dialogueBox(context, "User data not found.");
+          setState(() {
+            isLoading = false;
+          });
+          return;
+        }
+
+        if(value['type']=='parent'){
+          print(value['type']);
+          MySharedPreference.saveUserType('parent');
+          goTo(context,ParentHomeScreen());
+        }
+        else
+        {
+          MySharedPreference.saveUserType('child');
+           goTo(context, HomePage());
+        }
+        setState(() {
+          isLoading = false;
+        });
+      });
+   
+  }
+} on FirebaseAuthException catch (e) {
+  setState(() {
+        isLoading =false;
+      });
+  if (e.code == 'user-not-found') {
+    dialogueBox(context,'No user found for that email.' );
+    print('No user found for that email.');
+  } else if (e.code == 'wrong-password') {
+    dialogueBox(context, 'Wrong password provided for that user.');
+    print('Wrong password provided for that user.');
+  }
+}
+
     print(_formData['email']);
     print(_formData['password']);
   }
@@ -27,8 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
+          child: Stack(
+          children:[
+            isLoading
+                ? progressIndicator(context)
+             :
+          SingleChildScrollView(
+            child:Column(
+              children: [
+                 Column(
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height * 0.3,
@@ -103,6 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         PrimaryButton(
                           title: 'LOGIN',
                           onPressed: () {
+                            progressIndicator(context);
                             if (_formKey.currentState!.validate()) {
                               _onSubmit();
                             }
@@ -135,6 +205,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
+            ],
+            ),
+          
+          ),
+          ],
           ),
         ),
       ),

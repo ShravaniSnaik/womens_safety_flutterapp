@@ -7,9 +7,14 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
+        maven { url = uri("https://storage.googleapis.com/download.flutter.io") } // Flutter plugin repository
+    
+
     }
 }
 

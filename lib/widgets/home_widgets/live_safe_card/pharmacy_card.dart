@@ -8,6 +8,7 @@ class PharmacyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
+      child: SingleChildScrollView(
       child: Column(
         children: [
           InkWell(
@@ -31,6 +32,7 @@ class PharmacyCard extends StatelessWidget {
           Text('Pharmacy'),
         ],
       ),
+    ),
     );
   }
 }
