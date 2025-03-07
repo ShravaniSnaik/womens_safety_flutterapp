@@ -37,11 +37,10 @@ android {
 }
 
 dependencies {
-        // START: FlutterFire Configuration
-        classpath("com.google.gms:google-services:4.3.15")
-        // END: FlutterFire Configuration
+        
     classpath("com.android.tools.build:gradle:8.4.0") // Match your Gradle version
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
+    classpath ('com.google.gms:google-services:4.4.2')
 }
 
 tasks.register<Delete>("clean") {
