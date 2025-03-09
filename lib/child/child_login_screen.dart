@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/child/bottom_page.dart';
 import 'package:flutter_demo/child/register_child.dart';
 import 'package:flutter_demo/db/sp.dart';
-import 'package:flutter_demo/child/bottom_screens/home.dart';
 import 'package:flutter_demo/parent/parent_home_screen.dart';
 import '../components/custom_textfield.dart'; // Replace with the correct path
 import '../components/PrimaryButton.dart';
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
         else
         {
           MySharedPreference.saveUserType('child');
-           goTo(context, HomePage());
+           goTo(context, BottomPage());
         }
         setState(() {
           isLoading = false;

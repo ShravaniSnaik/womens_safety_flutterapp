@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_demo/child/bottom_screens/chat_page.dart';
 import './child/bottom_page.dart';
 import 'package:flutter_demo/child/child_login_screen.dart';
 import 'package:flutter_demo/db/sp.dart';
@@ -39,25 +40,29 @@ class MyApp extends StatelessWidget {
       // ?ParentHomeScreen()
       // :LoginScreen(),
       //we have alternate way for above as it will slow
-      home: FutureBuilder(
-        future:  MySharedPreference.getUserType(),
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          if(snapshot.data=="")
-          {
-            return LoginScreen();
-          }
-          if(snapshot.data=="child")
-          {
-            return BottomPage();
-          }
-          if(snapshot.data=="parent")
-          {
-            return ParentHomeScreen();
-          }
-          return progressIndicator(context);
-        }
-        )
-    );
+
+
+
+    //   home: FutureBuilder(
+    //     future:  MySharedPreference.getUserType(),
+    //     builder: (BuildContext context, AsyncSnapshot snapshot){
+    //       if(snapshot.data=="")
+    //       {
+    //         return LoginScreen();
+    //       }
+    //       if(snapshot.data=="child")
+    //       {
+    //         return BottomPage();
+    //       }
+    //       if(snapshot.data=="parent")
+    //       {
+    //         return ParentHomeScreen();
+    //       }
+    //       return progressIndicator(context);
+    //     }
+    //     )
+    // );
+    home: ChatPage());
   }
 }
 
