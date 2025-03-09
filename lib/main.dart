@@ -7,21 +7,20 @@ import 'package:flutter_demo/parent/parent_home_screen.dart';
 import 'package:flutter_demo/utils/constants.dart';
 import './firebase_options.dart';
 
-
-void main () async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-try {
+  try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    debugPrint(" Firebase Initialized Successfully!");  // ✅ Add this here
+    debugPrint(" Firebase Initialized Successfully!"); // ✅ Add this here
   } catch (e) {
     debugPrint(" Firebase Initialization Failed: $e");
-}
+  }
 
-await MySharedPreference.init();
-    runApp(const MyApp());
+  await MySharedPreference.init();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -40,23 +39,20 @@ class MyApp extends StatelessWidget {
       // :LoginScreen(),
       //we have alternate way for above as it will slow
       home: FutureBuilder(
-        future:  MySharedPreference.getUserType(),
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          if(snapshot.data=="")
-          {
+        future: MySharedPreference.getUserType(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == "") {
             return LoginScreen();
           }
-          if(snapshot.data=="child")
-          {
+          if (snapshot.data == "child") {
             return BottomPage();
           }
-          if(snapshot.data=="parent")
-          {
+          if (snapshot.data == "parent") {
             return ParentHomeScreen();
           }
           return progressIndicator(context);
-        }
-        )
+        },
+      ),
     );
   }
 }
@@ -77,6 +73,3 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
-
-
-
