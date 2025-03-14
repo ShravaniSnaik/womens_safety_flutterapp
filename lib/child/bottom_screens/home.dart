@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:shake/shake.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/home_widgets/CustomCarouel.dart';
 import 'package:flutter_demo/widgets/home_widgets/custom_appBar.dart';
