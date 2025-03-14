@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_demo/child/bottom_screens/chat_page.dart';
+import 'package:flutter_demo/utils/flutter_background_services.dart';
 import './child/bottom_page.dart';
 import 'package:flutter_demo/child/child_login_screen.dart';
 import 'package:flutter_demo/db/sp.dart';
@@ -21,6 +21,7 @@ void main() async {
   }
 
   await MySharedPreference.init();
+  await initializeService();
   runApp(const MyApp());
 }
 
@@ -33,33 +34,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins', primarySwatch: Colors.blue),
+
       // home: MySharedPreference.getUserType()=='child'
       // ?HomePage()
       // :MySharedPreference.getUserType()=='parent'
       // ?ParentHomeScreen()
       // :LoginScreen(),
       //we have alternate way for above as it will slow
-
-
-
       home: FutureBuilder(
-        future:  MySharedPreference.getUserType(),
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          if(snapshot.data=="")
-          {
+        future: MySharedPreference.getUserType(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == "") {
             return LoginScreen();
           }
-          if(snapshot.data=="child")
-          {
+          if (snapshot.data == "child") {
             return BottomPage();
           }
-          if(snapshot.data=="parent")
-          {
+          if (snapshot.data == "parent") {
             return ParentHomeScreen();
           }
           return progressIndicator(context);
-        }
-        )
+        },
+      ),
     );
     //home: ChatPage());
   }

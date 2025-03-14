@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/chat_module/message_text_field.dart';
 import 'package:flutter_demo/chat_module/singleMessage.dart';
-import 'package:flutter_demo/child/child_login_screen.dart';
 import 'package:flutter_demo/utils/constants.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -54,7 +52,6 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-
             child: StreamBuilder(
               stream:
                   FirebaseFirestore.instance
@@ -76,38 +73,35 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     );
                   }
-                    return Container(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      bool isMe =
-                          snapshot.data!.docs[index]['senderId'] ==
-                          widget.currentUserId;
-                      final data = snapshot.data!.docs[index];
-                      return SingleMessage(
-                        message: data['message'],
-                        date: data['date'],
-                        isMe: isMe,
-                        friendName: widget.friendName,
-                        myName: myname,
-                         type: data['type'],
-                      );
-                    },
-                  ),
-                );
-            
+                  return Container(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        bool isMe =
+                            snapshot.data!.docs[index]['senderId'] ==
+                            widget.currentUserId;
+                        final data = snapshot.data!.docs[index];
+                        return SingleMessage(
+                          message: data['message'],
+                          date: data['date'],
+                          isMe: isMe,
+                          friendName: widget.friendName,
+                          myName: myname,
+                          type: data['type'],
+                        );
+                      },
+                    ),
+                  );
                 }
                 return progressIndicator(context);
-  },
+              },
             ),
           ),
-        
-        MessageTextField(
-          currentId: widget.currentUserId,
-          friendId: widget.friendId,
-        ),
-            
 
+          MessageTextField(
+            currentId: widget.currentUserId,
+            friendId: widget.friendId,
+          ),
         ],
       ),
     );
