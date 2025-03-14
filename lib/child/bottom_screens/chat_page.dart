@@ -1,6 +1,54 @@
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_demo/utils/constants.dart';
+
+// class ChatPage extends StatelessWidget {
+//   const ChatPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Color.fromARGB(255, 246, 3, 84),
+//         title: Text('Select Guardian'),
+//       ),
+//       body: StreamBuilder(
+//       stream: FirebaseFirestore.instance
+//       .collection('users')
+//       .where('type',isEqualTo: 'parent')
+//       .where('childEmail',isEqualTo: FirebaseAuth.instance.currentUser!.email)
+//       .snapshots(),
+//        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+//         if(!snapshot.hasData){
+//           return Center(child: progressIndicator(context));
+//         }
+//             return ListView.builder(
+//               itemCount: snapshot.data!.docs.length,
+//               itemBuilder: (BuildContext context, int index){
+//                 final d=snapshot.data!.docs[index];
+//                 return Padding(padding: const EdgeInsets.all(8.0),
+//                 child: Container(
+//                   color: Color.fromARGB(255,250,163,192),
+//                   child: ListTile(
+//                     title: Padding(
+//                       padding:const EdgeInsets.all(8.0),
+//                      child: Text(d['name']),
+//                      )
+//                   ),
+//                 ),);
+//               },
+//             );
+//        }
+//        )
+//     );
+//   }
+// }
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/chat_module/chat_screen.dart'; // Import ChatScreen
 import 'package:flutter_demo/utils/constants.dart';
 
 class ChatPage extends StatelessWidget {
@@ -14,33 +62,51 @@ class ChatPage extends StatelessWidget {
         title: Text('Select Guardian'),
       ),
       body: StreamBuilder(
-      stream: FirebaseFirestore.instance
-      .collection('users')
-      .where('type',isEqualTo: 'parent')
-      .where('childEmail',isEqualTo: FirebaseAuth.instance.currentUser!.email)
-      .snapshots(),
-       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-        if(!snapshot.hasData){
-          return Center(child: progressIndicator(context));
-        }
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (BuildContext context, int index){
-                final d=snapshot.data!.docs[index];
-                return Padding(padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: Color.fromARGB(255,250,163,192),
-                  child: ListTile(
-                    title: Padding(
-                      padding:const EdgeInsets.all(8.0),
-                     child: Text(d['name']),
-                     )
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .where('type', isEqualTo: 'parent')
+            .where('childEmail', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: progressIndicator(context));
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (BuildContext context, int index) {
+              final d = snapshot.data!.docs[index];
+
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(  // ✅ Makes it clickable
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatScreen(
+                          currentUserId: FirebaseAuth.instance.currentUser!.uid,
+                          friendId: d.id,  // ✅ Parent's UID
+                          friendName: d['name'],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    color: Color.fromARGB(255, 250, 163, 192),
+                    child: ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(d['name']),
+                      ),
+                    ),
                   ),
-                ),);
-              },
-            );
-       }
-       )
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

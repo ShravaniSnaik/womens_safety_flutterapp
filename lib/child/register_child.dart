@@ -88,6 +88,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF50046C),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -100,26 +101,27 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.2,
 
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                   // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "REGISTER AS CHILD",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFFECE1EE) 
                         ),
                       ),
 
-                      Image.asset('assets/logo.png', height: 100, width: 100),
+                      
                     ],
                   ),
                 ),
+              
                 Container(
                   height: MediaQuery.of(context).size.height * 0.75,
                   child: Form(
@@ -129,9 +131,12 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                       children: [
                         CustomTextField(
                           hintText: 'Enter name',
+                           hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                                    style: TextStyle(color: Color(0xFFECE1EE) ),
                           textInputAction: TextInputAction.next,
                           keyboardtype: TextInputType.name,
-                          prefix: Icon(Icons.person),
+                          prefix: Icon(Icons.person,
+                          color: Color(0xFFECE1EE),),
                           onsave: (name) {
                             _formData['name'] = name ?? "";
                           },
@@ -144,9 +149,12 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                         ),
                         CustomTextField(
                           hintText: 'Enter phone',
+                          hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                          style: TextStyle(color: Color(0xFFECE1EE) ),
                           textInputAction: TextInputAction.next,
                           keyboardtype: TextInputType.phone,
-                          prefix: Icon(Icons.phone),
+                          prefix: Icon(Icons.phone,
+                          color: Color(0xFFECE1EE),),
                           onsave: (phone) {
                             _formData['phone'] = phone ?? "";
                           },
@@ -159,9 +167,12 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                         ),
                         CustomTextField(
                           hintText: 'Enter email',
+                          hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                          style: TextStyle(color: Color(0xFFECE1EE) ),
                           textInputAction: TextInputAction.next,
                           keyboardtype: TextInputType.emailAddress,
-                          prefix: const Icon(Icons.person),
+                          prefix: const Icon(Icons.person,
+                          color: Color(0xFFECE1EE),),
                           onsave: (email) {
                             _formData['cemail'] = email ?? "";
                           },
@@ -176,9 +187,12 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                         ),
                         CustomTextField(
                           hintText: 'Enter guardian email',
+                         hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                          style: TextStyle(color: Color(0xFFECE1EE) ),
                           textInputAction: TextInputAction.next,
                           keyboardtype: TextInputType.emailAddress,
-                          prefix: Icon(Icons.person),
+                          prefix: Icon(Icons.person,
+                          color: Color(0xFFECE1EE),),
                           onsave: (gemail) {
                             _formData['gemail'] = gemail ?? "";
                           },
@@ -193,8 +207,11 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                         ),
                         CustomTextField(
                           hintText: 'Enter password',
+                         hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                          style: TextStyle(color: Color(0xFFECE1EE) ),
                           isPassword: isPasswordShown,
-                          prefix: Icon(Icons.vpn_key_rounded),
+                          prefix: Icon(Icons.vpn_key_rounded,
+                          color: Color(0xFFECE1EE),),
                           onsave: (password) {
                             _formData['password'] = password ?? "";
                           },
@@ -214,13 +231,17 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                 isPasswordShown
                                     ? Icon(Icons.visibility_off)
                                     : Icon(Icons.visibility),
+                                    color: Color(0xFFECE1EE),
                           ),
                         ),
 
                         CustomTextField(
                           hintText: ' retype password',
+                         hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                          style: TextStyle(color: Color(0xFFECE1EE) ),
                           isPassword: isRetypePasswordShown,
-                          prefix: Icon(Icons.vpn_key_rounded),
+                          prefix: Icon(Icons.vpn_key_rounded,
+                          color: Color(0xFFECE1EE),),
                           onsave: (password) {
                             _formData['rpassword'] = password ?? "";
                           },
@@ -240,6 +261,7 @@ class _RegisterChildScreenState extends State<RegisterChildScreen> {
                                 isRetypePasswordShown
                                     ? Icon(Icons.visibility_off)
                                     : Icon(Icons.visibility),
+                                    color: Color(0xFFECE1EE),
                           ),
                         ),
 

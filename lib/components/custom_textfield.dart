@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? hintText;
+  final TextStyle? style;
+   final TextStyle? hintStyle; 
   final TextEditingController? controller;
   final String? Function(String?)? validate;
   final Function(String?)? onsave;
@@ -28,12 +30,13 @@ class CustomTextField extends StatelessWidget {
     this.prefix,
     this.suffix,
     this.textInputAction,
-    this.validate,
+    this.validate, this.hintStyle, this.style,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: style ?? TextStyle(color: Colors.black),
       enabled: enable == true ? true : enable,
       maxLines: maxLines == null ? 1 : maxLines,
       onSaved: onsave,
@@ -47,6 +50,9 @@ class CustomTextField extends StatelessWidget {
         prefixIcon: prefix,
         suffixIcon: suffix,
         labelText: hintText ?? "hint text..",
+        labelStyle: hintStyle, // Apply custom hint text style
+  hintText: hintText, // Ensure hint text is set
+  hintStyle: hintStyle ?? TextStyle(color:  Color(0xFFE0435E),), // Set hint text color
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
@@ -58,7 +64,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
             style: BorderStyle.solid,
-            color: Color(0xFF909A9E),
+            color: Color(0xFFE0435E),
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
