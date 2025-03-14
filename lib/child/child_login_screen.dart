@@ -5,7 +5,7 @@ import 'package:flutter_demo/child/bottom_page.dart';
 import 'package:flutter_demo/child/register_child.dart';
 import 'package:flutter_demo/db/sp.dart';
 import 'package:flutter_demo/parent/parent_home_screen.dart';
-import '../components/custom_textfield.dart'; // Replace with the correct path
+import '../components/custom_textfield.dart';
 import '../components/PrimaryButton.dart';
 import '../../utils/constants.dart';
 import '../components/SecondaryButton.dart';
@@ -19,30 +19,30 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordShown = true;
   final _formKey = GlobalKey<FormState>();
-  final _formData = Map<String, Object>();
-  bool isLoading=false;
+  final Map<String, String> _formData = {};
+  bool isLoading = false;
 
-  _onSubmit() async{
+  Future<void> _onSubmit() async {
+    if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
-    try {
-      setState(() {
-        isLoading =true;
-      });
-  UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: _formData['cemail'].toString(),
-    password: _formData['password'].toString(),
-  );
-  if (userCredential.user!=null){
-    // setState(() {
-    //     isLoading =true;
-    //   });
-      FirebaseFirestore.instance
-      .collection('users')
-      .doc(userCredential.user!.uid)
-      .get()
-      .then((value) {
 
-         if (!value.exists) {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _formData['email']!,
+        password: _formData['password']!,
+      );
+
+      if (userCredential.user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .get();
+
+        if (!userDoc.exists) {
           dialogueBox(context, "User data not found.");
           setState(() {
             isLoading = false;
@@ -50,168 +50,154 @@ class _LoginScreenState extends State<LoginScreen> {
           return;
         }
 
-        if(value['type']=='parent'){
-          print(value['type']);
-          MySharedPreference.saveUserType('parent');
-          goTo(context,ParentHomeScreen());
-        }
-        else
-        {
-          MySharedPreference.saveUserType('child');
-           goTo(context, BottomPage());
-        }
-        setState(() {
-          isLoading = false;
-        });
-      });
-   
-  }
-} on FirebaseAuthException catch (e) {
-  setState(() {
-        isLoading =false;
-      });
-  if (e.code == 'user-not-found') {
-    dialogueBox(context,'No user found for that email.' );
-    print('No user found for that email.');
-  } else if (e.code == 'wrong-password') {
-    dialogueBox(context, 'Wrong password provided for that user.');
-    print('Wrong password provided for that user.');
-  }
-}
+        String userType = userDoc['type'];
+        await MySharedPreference.saveUserType(userType);
 
-    print(_formData['email']);
-    print(_formData['password']);
+        Widget nextScreen = (userType == 'parent') ? ParentHomeScreen() : BottomPage();
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => nextScreen));
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = "An error occurred.";
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Wrong password provided.';
+      }
+      dialogueBox(context, errorMessage);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-          children:[
-            isLoading
-                ? progressIndicator(context)
-             :
-          SingleChildScrollView(
-            child:Column(
-              children: [
-                 Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "USER LOGIN",
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
-                        ),
-                      ),
-
-                      Image.asset('assets/logo.png', height: 100, width: 100),
-                    ],
-                  ),
-                ),
-
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CustomTextField(
-                          hintText: 'Enter email',
-                          textInputAction: TextInputAction.next,
-                          keyboardtype: TextInputType.emailAddress,
-                          prefix: const Icon(Icons.person),
-                          onsave: (email) {
-                            _formData['email'] = email ?? "";
-                          },
-                          validate: (email) {
-                            if (email!.isEmpty ||
-                                email.length < 3 ||
-                                !email.contains("@")) {
-                              return 'enter correct email';
-                            }
-                            return null;
-                          },
-                        ),
-                        CustomTextField(
-                          hintText: 'Enter password',
-                          isPassword: isPasswordShown,
-                          prefix: const Icon(Icons.vpn_key_rounded),
-                          onsave: (password) {
-                            _formData['password'] = password ?? "";
-                          },
-                          validate: (password) {
-                            if (password!.isEmpty || password.length < 7) {
-                              return 'enter correct password';
-                            }
-                            return null;
-                          },
-                          suffix: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isPasswordShown = !isPasswordShown;
-                              });
-                            },
-                            icon:
-                                isPasswordShown
-                                    ? Icon(Icons.visibility_off)
-                                    : Icon(Icons.visibility),
+      body: Stack( // ✅ Used Stack to set background properly
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/login_page_background (2).jpg',  // ✅ Changed filename (removed spaces)
+              fit: BoxFit.cover,
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  if (isLoading)
+                    Center(child: progressIndicator(context))
+                  else
+                  Expanded(child: 
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "USER LOGIN",
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFFECE1EE),
+                                  ),
+                                ),
+                                Image.asset('assets/logo.png', height: 100, width: 100),
+                              ],
+                            ),
                           ),
-                        ),
-                        PrimaryButton(
-                          title: 'LOGIN',
-                          onPressed: () {
-                            progressIndicator(context);
-                            if (_formKey.currentState!.validate()) {
-                              _onSubmit();
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Forgot Password", style: TextStyle(fontSize: 18)),
-                      SecondaryButton(title: 'click here', onPressed: () {}),
-                    ],
-                  ),
-                ),
-                SecondaryButton(
-                  title: 'Register as child',
-                  onPressed: () {
-                    goTo(context, RegisterChildScreen());
-                  },
-                ),
-                SecondaryButton(
-                  title: 'Register as parent',
-                  onPressed: () {
-                    goTo(context, RegisterParentScreen());
-                  },
-                ),
-              ],
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomTextField(
+                                    hintText: 'Enter email',
+                                    hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                                    style: TextStyle(color: Color(0xFFECE1EE) ),
+                                    textInputAction: TextInputAction.next,
+                                    keyboardtype: TextInputType.emailAddress,
+                                    prefix: const Icon(Icons.person, color:  Color(0xFFE0435E),),
+                                    onsave: (email) {
+                                      _formData['email'] = email ?? "";
+                                    },
+                                    validate: (email) {
+                                      if (email!.isEmpty || !email.contains("@")) {
+                                        return 'Enter a valid email';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  CustomTextField(
+                                    hintText: 'Enter password',
+                                    hintStyle: TextStyle(color: Color(0xFFE0435E)),
+                                   // style: TextStyle(color: Color(0xFFECE1EE) ),
+                                    isPassword: isPasswordShown,
+                                    prefix: const Icon(Icons.vpn_key_rounded , color:  Color(0xFFE0435E),),
+                                    onsave: (password) {
+                                      _formData['password'] = password ?? "";
+                                    },
+                                    validate: (password) {
+                                      if (password!.isEmpty || password.length < 7) {
+                                        return 'Enter a valid password';
+                                      }
+                                      return null;
+                                    },
+                                    suffix: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isPasswordShown = !isPasswordShown;
+                                        });
+                                      },
+                                      icon: isPasswordShown
+                                          ? Icon(Icons.visibility_off)
+                                          : Icon(Icons.visibility),
+                                          color:  Color(0xFFE0435E),
+                                    ),
+                                  ),
+                                  PrimaryButton(
+                                    title: 'LOGIN',
+                                    onPressed: _onSubmit,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Forgot Password", style: TextStyle(fontSize: 18,color:Color(0xFFE0435E))),
+                              SecondaryButton(title: 'Click here', onPressed: () {}),
+                            ],
+                          ),
+                          SecondaryButton(
+                            title: 'Register as child',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterChildScreen()));
+                            },
+                          ),
+                          SecondaryButton(
+                            title: 'Register as parent',
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterParentScreen()));
+                            },
+                          ),
+                        ],
+                      ),
+                    ),)
+                ],
+              ),
             ),
-            ],
-            ),
-          
           ),
-          ],
-          ),
-        ),
+        ],
       ),
     );
   }

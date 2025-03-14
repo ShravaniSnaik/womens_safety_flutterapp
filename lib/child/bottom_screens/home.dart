@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   //const HomePage({super.key});
   int qIndex = 0;
 
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFECE1EE),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

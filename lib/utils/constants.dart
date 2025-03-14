@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 
 const Color primaryColor = Color(0xfffc3b77);
 
-void goTo(BuildContext context, Widget nextScreen) {
-  Navigator.push(
-    context, 
-    MaterialPageRoute(
-      builder: (context) => nextScreen,
-      ));
+void goTo(BuildContext context, Widget nextScreen, {bool replace = false}) {
+  if (replace) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => nextScreen),
+    );
+  } else {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => nextScreen),
+    );
+  }
 }
 
 dialogueBox(BuildContext context, String text) {

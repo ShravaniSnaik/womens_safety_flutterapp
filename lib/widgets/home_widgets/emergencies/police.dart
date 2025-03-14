@@ -14,70 +14,84 @@ class PoliceEmergency extends StatelessWidget {
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: InkWell(
-          onTap: () => _callNumber('015'),
-          child: Container(
-            height: 180,
-            width: MediaQuery.of(context).size.width * 0.7,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFFFD8080),
-                  Color(0xFFFB8580),
-                  Color(0xFFFBD079),
-                ],
+          onTap: () => _callNumber('100'),
+          child: IntrinsicHeight( // Adjusts height dynamically
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 1000, // Prevents extreme width expansion
+                minWidth: 250, // Ensures it doesn’t become too small
               ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF0C0000),
+                    Color(0xFF43061E),
+                    Color(0xFF9F80A7),
+                    Color(0xFFECE1EE),
+                  ],
+                  stops: [0.0, 0.3, 0.7, 1.0],
+                ),
+              ),
               child: Column(
+                mainAxisSize: MainAxisSize.min, // Prevents extra space
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     radius: 25,
-                    backgroundColor: Colors.white.withOpacity(0.5),
-                    child: Image.asset('assets/alert.png'),
+                    backgroundColor: Color(0xFF9F80A7).withOpacity(0.5),
+                    child: Image.asset(
+                      'assets/alert.png',
+                       width: 40,  // Increase width
+    height: 40, // Increase height
+    fit: BoxFit.contain,
+                    ),
                   ),
+                  SizedBox(height: 10),
 
-                  Expanded(
+                  Flexible( // Prevents overflow
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Active Emergency',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.06,
+                        FittedBox( // Ensures text resizes
+                          child: Text(
+                            'Active Emergency',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
-                        Text(
-                          'call 0-1-5 for emergencies',
-                          style: TextStyle(
-                            color: Colors.white,
-
-                            fontSize: MediaQuery.of(context).size.width * 0.045,
+                        SizedBox(height: 5),
+                        FittedBox(
+                          child: Text(
+                            'Call 1-0-0 for emergencies',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
+                        SizedBox(height: 3),
                         Container(
-                          height: 30,
+                          height: 20,
                           width: 80,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
                           ),
-
                           child: Center(
                             child: Text(
-                              '0-1-5',
+                              '1-0-0',
                               style: TextStyle(
-                                color: Colors.red[300],
+                                color: Color(0xFF43061E),
                                 fontWeight: FontWeight.bold,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.055,
+                                fontSize: 18,
                               ),
                             ),
                           ),
