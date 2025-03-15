@@ -146,18 +146,18 @@ sendMessage(String message,String type) async
       
       padding:EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFFECE1EE),
         borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
           Expanded(
        child: TextField(
-        cursorColor: Colors.pink,
+        cursorColor: Color(0xFF43061E),
         controller: _controller,
 
         decoration: InputDecoration(
          hintText:'type your message',
-          fillColor: Colors.grey[100],
+          fillColor: Color(0xFFECE1EE),
           filled: true,
           prefixIcon: IconButton(
             onPressed:(){
@@ -168,7 +168,7 @@ sendMessage(String message,String type) async
             },
             icon: Icon(
               Icons.add_box_rounded,
-              color:Colors.pink,))
+              color:Color(0xFF43061E),))
         ),
       ),
       ),
@@ -182,7 +182,7 @@ sendMessage(String message,String type) async
           },
         child: Icon(
           Icons.send,
-          color:Colors.pink,
+          color:Color(0xFF43061E),
           size:30,
         ),
         ),
@@ -235,7 +235,7 @@ sendMessage(String message,String type) async
     children: [
       CircleAvatar(
         radius:30,
-        backgroundColor: Colors.pink,
+        backgroundColor:Color(0xFF43061E),
         child:Icon(icons),
       ),
       Text("$title")

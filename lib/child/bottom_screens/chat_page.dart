@@ -58,10 +58,19 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 246, 3, 84),
-        title: Text('Select Guardian'),
+        backgroundColor: Color(0xFF43061E),
+        title: Text('Select Guardian',
+        style: TextStyle(color: Color(0xFFECE1EE),fontSize: 20,fontWeight: FontWeight.w100),),
       ),
-      body: StreamBuilder(
+      body: 
+      Container(
+         decoration: BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage('assets/chat-page1.jpg'),
+      fit: BoxFit.cover, 
+    ),
+  ),
+    child:  StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('users')
             .where('type', isEqualTo: 'parent')
@@ -93,11 +102,11 @@ class ChatPage extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    color: Color.fromARGB(255, 250, 163, 192),
+                    color: Color(0xFF9F80A7),
                     child: ListTile(
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(d['name']),
+                        child: Text(d['name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.w100,color:Color(0xFFECE1EE) )),
                       ),
                     ),
                   ),
@@ -107,6 +116,6 @@ class ChatPage extends StatelessWidget {
           );
         },
       ),
-    );
+    ),);
   }
 }

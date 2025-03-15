@@ -16,20 +16,25 @@ class BusStationCard extends StatelessWidget {
               onMapFunction!('bus stations near me');
             },
           child: Card(
-            elevation: 3,
+            elevation: 10,
+            shadowColor:  Color(0xFF43061E),
+            surfaceTintColor: Color(0xFF43061E),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             child: Container(
               height: 50,
               width: 50,
+              
               child: Center(
-                child: Image.asset('assets/bus-stop.png', height: 32),
+                child: Image.asset('assets/bus-stop.png', height: 50,width: 50,),
               ),
             ),
           ),
           ),
-          Text('Bus Station'),
+          Text('Bus Station',
+          style: TextStyle(fontSize: 14,color:  Color(0xFF43061E),fontWeight: FontWeight.w100),),
+          
         ],
       ),
     ),

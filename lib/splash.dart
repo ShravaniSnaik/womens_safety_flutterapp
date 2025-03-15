@@ -96,7 +96,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return AnimatedSplashScreen(
       backgroundColor:  Color(0xFFECE1EE),
       splash: Center(
-        child: Lottie.asset('assets/animations/splash_animation.json'),
+        child: Lottie.asset('assets/animations/splash_animation.json', width: 400,  // Adjust size as needed
+      height: 400,
+      alignment: Alignment.center,
+      fit: BoxFit.cover,),
+       
       ),
       nextScreen: Scaffold(body: Container()), // Temporary screen
       duration: 3500,

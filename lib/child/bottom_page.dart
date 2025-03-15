@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/child/bottom_screens/add_contacts.dart';
 import 'package:flutter_demo/child/bottom_screens/chat_page.dart';
-import './bottom_screens/contact_page.dart';
 import 'package:flutter_demo/child/bottom_screens/home.dart';
 import 'package:flutter_demo/child/bottom_screens/profile_page.dart';
 import 'package:flutter_demo/child/bottom_screens/review_page.dart';

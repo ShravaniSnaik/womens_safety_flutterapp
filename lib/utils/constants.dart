@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 const Color primaryColor = Color(0xfffc3b77);
 
@@ -25,10 +26,11 @@ dialogueBox(BuildContext context, String text) {
 
 Widget progressIndicator(BuildContext context) {
   return Center(
-    child: CircularProgressIndicator(
-      backgroundColor: primaryColor,
-      color: Colors.red,
-      strokeWidth: 7,
+    child: Lottie.asset(
+      'assets/animations/loading.json',  // Ensure the JSON file is added to assets
+      width: 150,  // Adjust size as needed
+      height: 150,
+      fit: BoxFit.cover,
     ),
   );
 }

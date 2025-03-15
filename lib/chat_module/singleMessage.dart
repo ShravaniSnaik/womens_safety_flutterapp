@@ -37,9 +37,9 @@ class SingleMessage extends StatelessWidget {
       
 
       child: Container(
-        
+      
         decoration: BoxDecoration(
-          color: isMe! ? Colors.pink:Colors.black,
+          color: isMe! ? Color(0xFF9F80A7):Color(0xFFE0435E),
         borderRadius: isMe!
         ? BorderRadius.only(
           topLeft:Radius.circular(15),

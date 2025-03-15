@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
                         "Emergency",
                         style: TextStyle(
                           fontSize: 20,
+                          color:  Color(0xFF43061E),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -65,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                         "Explore LiveSafe",
                         style: TextStyle(
                           fontSize: 20,
+                          color:  Color(0xFF43061E),
                           fontWeight: FontWeight.w700,
                         ),
                       ),

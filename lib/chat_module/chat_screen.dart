@@ -120,7 +120,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/chat_module/message_text_field.dart';
 import 'package:flutter_demo/chat_module/singleMessage.dart';
-import 'package:flutter_demo/utils/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -172,11 +171,22 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
-        backgroundColor: Colors.pink,
-        title: Text(widget.friendName),
+         iconTheme: IconThemeData(color: Color(0xFFECE1EE)),
+        backgroundColor: Color(0xFF43061E),
+        title: Text(widget.friendName,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w100,color: Color(0xFFECE1EE),),),
       ),
-      body: Column(
+      body:
+      Container(
+       decoration: BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage('assets/chat-page1.jpg'),
+      fit: BoxFit.cover, 
+    ),
+  ),
+        child: Column(
+        
         children: [
           Expanded(
             child: StreamBuilder(
@@ -199,7 +209,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   return Center(
                     child: Text(
                       type == 'parent' ? "Talk with child" : "Talk with parent",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20,color: Color(0xFF43061E),),
                     ),
                   );
                 }
@@ -250,7 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
             friendId: widget.friendId,
           ),
         ],
-      ),
+      ),)
     );
   }
 }

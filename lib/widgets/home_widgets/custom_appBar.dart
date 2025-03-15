@@ -19,7 +19,8 @@ const CustomAppbar(this.onTap,this.quoteIndex,{super.key});
       womenEmpowermentQuotes[quoteIndex??0],
       style:const TextStyle(
         fontSize: 22,
-        backgroundColor: Colors.blue,
+        color: Color(0xFF43061E),
+        fontWeight: FontWeight.w100,
       ),
       ),
     ),

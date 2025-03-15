@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../db/db_services.dart';
 import '../../../model/contactsm.dart';
@@ -94,6 +94,7 @@ class _SafeHomeState extends State<SafeHome> {
       builder: (context) {
         return Container(
           height: MediaQuery.of(context).size.height / 1.4,
+
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Column(
@@ -147,7 +148,7 @@ class _SafeHomeState extends State<SafeHome> {
             ),
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color(0xFF9F80A7),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
@@ -163,6 +164,7 @@ class _SafeHomeState extends State<SafeHome> {
     return InkWell(
       onTap: () => showModelSafeHome(context),
       child: Card(
+        color: Color(0xFF9F80A7),
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
@@ -175,15 +177,39 @@ class _SafeHomeState extends State<SafeHome> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text("Send Location"),
-                      subtitle: Text("Share Location"),
+                      title: Text(
+                        "Send Location",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF43061E),
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 8), // Adjust gap as needed
+                          Text(
+                            "Let quickly know your guardian your current location",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFFECE1EE),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset('assets/route.jpg'),
+                child: Lottie.asset(
+                  'assets/animations/location.json', // Ensure the JSON file is added to assets
+                  width: 200, // Adjust size as needed
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
             ],
           ),

@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   if (isLoading)
-                    Center(child: progressIndicator(context))
+  Expanded(child: Center(child: progressIndicator(context)))
                   else
                   Expanded(child: 
                     SingleChildScrollView(
