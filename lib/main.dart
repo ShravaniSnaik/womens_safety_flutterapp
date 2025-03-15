@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_demo/utils/flutter_background_services.dart';
-import './child/bottom_page.dart';
-import 'package:flutter_demo/child/child_login_screen.dart';
 import 'package:flutter_demo/db/sp.dart';
-import 'package:flutter_demo/parent/parent_home_screen.dart';
 import 'package:flutter_demo/splash.dart';
-import 'package:flutter_demo/utils/constants.dart';
 import 'package:flutter_demo/firebase_options.dart';
-import 'splash.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
