@@ -19,7 +19,10 @@ class PrimaryButton extends StatelessWidget {
         onPressed: () {
           onPressed();
         },
-        child: Text(title, style: TextStyle(fontSize: 18,color:Color(0xFFE0435E))),
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 18, color: Color(0xFFE0435E)),
+        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xFFECE1EE),
           shape: RoundedRectangleBorder(

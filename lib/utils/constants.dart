@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 const Color primaryColor = Color(0xfffc3b77);
+const kColorDarkRed = Colors.redAccent;
 
 void goTo(BuildContext context, Widget nextScreen, {bool replace = false}) {
   if (replace) {

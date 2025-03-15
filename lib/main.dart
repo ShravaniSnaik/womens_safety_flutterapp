@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_demo/utils/flutter_background_services.dart';
 import 'package:flutter_demo/db/sp.dart';
 import 'package:flutter_demo/splash.dart';
 import 'package:flutter_demo/firebase_options.dart';
@@ -19,6 +20,7 @@ void main() async {
   }
 
   await MySharedPreference.init();
+  await initializeService();
   runApp(const MyApp());
 }
 

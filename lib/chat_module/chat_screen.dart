@@ -96,25 +96,23 @@
 //                     },
 //                   ),
 //                 );
-            
+
 //                 }
 //                 return progressIndicator(context);
 //   },
 //             ),
 //           ),
-        
+
 //         MessageTextField(
 //           currentId: widget.currentUserId,
 //           friendId: widget.friendId,
 //         ),
-            
 
 //         ],
 //       ),
 //     );
 //   }
 // }
-
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -144,10 +142,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> getStatus() async {
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.currentUserId)
-          .get();
+      DocumentSnapshot userDoc =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(widget.currentUserId)
+              .get();
 
       if (userDoc.exists) {
         setState(() {
@@ -190,14 +189,18 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(widget.currentUserId)
-                  .collection('messages')
-                  .doc(widget.friendId)
-                  .collection('chats')
-                  .orderBy('date', descending: true) // ✅ Fix: Order messages
-                  .snapshots(),
+              stream:
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(widget.currentUserId)
+                      .collection('messages')
+                      .doc(widget.friendId)
+                      .collection('chats')
+                      .orderBy(
+                        'date',
+                        descending: true,
+                      ) // ✅ Fix: Order messages
+                      .snapshots(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -222,34 +225,40 @@ class _ChatScreenState extends State<ChatScreen> {
                     bool isMe = data['senderId'] == widget.currentUserId;
 
                     return Dismissible(
-                    key: UniqueKey(),
-                    onDismissed: (direction) async{
-                      await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(widget.currentUserId)
-                      .collection('messages')
-                      .doc(widget.friendId)
-                      .collection('chats')
-                      .doc(data.id)
-                      .delete();
+                      key: UniqueKey(),
+                      onDismissed: (direction) async {
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(widget.currentUserId)
+                            .collection('messages')
+                            .doc(widget.friendId)
+                            .collection('chats')
+                            .doc(data.id)
+                            .delete();
 
-                      await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(widget.friendId)
-                      .collection('messages')
-                      .doc(widget.currentUserId)
-                      .collection('chats')
-                      .doc(data.id)
-                      .delete().then((value)=>Fluttertoast.showToast(msg: 'message deleted successfully'));
-                    },
-                    child: SingleMessage(
-                      message: data['message'],
-                      date: data['date'],
-                      isMe: isMe,
-                      friendName: widget.friendName,
-                      myName: myname,
-                      type: data['type'],
-                    ));
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(widget.friendId)
+                            .collection('messages')
+                            .doc(widget.currentUserId)
+                            .collection('chats')
+                            .doc(data.id)
+                            .delete()
+                            .then(
+                              (value) => Fluttertoast.showToast(
+                                msg: 'message deleted successfully',
+                              ),
+                            );
+                      },
+                      child: SingleMessage(
+                        message: data['message'],
+                        date: data['date'],
+                        isMe: isMe,
+                        friendName: widget.friendName,
+                        myName: myname,
+                        type: data['type'],
+                      ),
+                    );
                   },
                 );
               },

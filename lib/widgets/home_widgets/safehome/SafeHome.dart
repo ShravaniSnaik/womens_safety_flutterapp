@@ -37,6 +37,44 @@ class _SafeHomeState extends State<SafeHome> {
     });
   }
 
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Location services are disabled. Please enable the services',
+          ),
+        ),
+      );
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Location permissions are denied')),
+        );
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Location permissions are permanently denied, we cannot request permissions.',
+          ),
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
   _getCurrentLocation() async {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -117,18 +155,10 @@ class _SafeHomeState extends State<SafeHome> {
                 PrimaryButton(
                   title: "SEND ALERT",
                   onPressed: () async {
+                    String recipients = "";
                     List<TContact> contactList =
                         await DatabaseHelper().getContactList();
-                    String recipients = "";
-                    print(contactList.length);
-                    int i = 1;
-                    for (TContact contact in contactList) {
-                      recipients += contact.number;
-                      if (i != contactList.length) {
-                        recipients += ";";
-                        i++;
-                      }
-                    }
+
                     String messageBody =
                         "https://www.google.com/maps/search/?api=1&query=${_curentPosition!.latitude}%2C${_curentPosition!.longitude}. $_curentAddress";
                     if (await _isPermissionGranted()) {
