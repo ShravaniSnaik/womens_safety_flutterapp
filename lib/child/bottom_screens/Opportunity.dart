@@ -23,6 +23,7 @@ class _OpportunitiesScreenState extends State<OpportunitiesScreen>
         title: Text(
           "Opportunities",
           style: TextStyle(
+            fontSize: 20,
             color: Color(0xFF43061E),
             fontWeight: FontWeight.bold, // Bold text
           ),
